@@ -18,4 +18,6 @@
 // import './home-work/home-work-18.js';
 // import './home-work/home-work-19.js';
 // import './projects/todo-list.js';
-import './projects/table.js';
+// import './projects/table.js';
+// import './projects/ajax-lecture.js';
+import './projects/ajax-homework.js';
