@@ -20,4 +20,5 @@
 // import './projects/todo-list.js';
 // import './projects/table.js';
 // import './projects/ajax-lecture.js';
-import './projects/ajax-homework.js';
+// import './projects/ajax-homework.js';
+import './projects/news-app.js';
