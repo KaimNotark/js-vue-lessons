@@ -1,3 +1,6 @@
+// этот файл запускать не нужно, он не будет работать 
+// в нём просто примеры кода для лекций
+
 // leture 1
 
 const promise = new Promise((resolve, reject) => {
@@ -74,4 +77,74 @@ Promise.all([
   // .then(([post, comment, user]) => console.log(post, comment, user))
   .catch(err => console.log(err));
 
-// lecture 3
+// lecture 3 fetch
+
+fetch('https://jsonplaceholder.typicode.com/posts')
+  .then(response => {
+    return response.json();
+  })
+  .then(posts => console.log(posts))
+  .catch(err => console.log(err));
+
+// --
+function getPost(id) {
+  return new Promise((resolve, reject) => {
+    fetch('https://jsonplaceholder.typicode.com/posts')
+      .then(response => response.json())
+      .then(posts => resolve(posts))
+      .catch(err => reject(err));
+  });
+}
+
+getPost(1).then(post => console.log(post));
+
+// --
+function getPost2(id) {
+  return Promise.resolve().then(() => {
+    const [userType, userId] = id.split('-');
+    return fetch(`https://jsonplaceholder.typicode.com/posts/${userId}`)
+      .then(response => response.json());
+  });
+}
+
+getPost2('user-1')
+  .then(post => console.log(post))
+  .catch(err => console.log(err));
+
+// lecture 4 async await
+
+async function getPost(id) {
+  const response = await fetch(`https://jsonplaceholder.typicode.com/posts/${id}`);
+  console.log(response);
+
+  const data = await response.json();
+  return data;
+}
+
+getPost(1)
+  .then(data => console.log(data))
+  .catch(err => console.log(err));
+
+// -- конструкция ниже удобна для обнаружения и обработки ошибок
+// ошибку перехватывают, выводят в консоль и передают наружу
+
+async function getPost(id) {
+  try {
+    const response = await fetch(
+      `https://jsonplaceholder.typicode.com/posts/${id}`
+    ).then(res => res.json());
+
+    return response;
+
+  } catch (err) {
+    console.log(err);
+    return Promise.reject(err);
+  }
+}
+
+// -- несколько запросов
+
+async function getAll() {
+  const [res1, res2] = await Promise.all([getPost(1), getPost2(2)]);
+  console.log(res1, res2);
+}
