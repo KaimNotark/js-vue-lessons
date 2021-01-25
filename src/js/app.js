@@ -5,3 +5,4 @@ import Product from './module2';
 console.log(new Product('Apple'));
 console.log(c);
 // console.log(mod1.foo());
+// console.log('Easy');
